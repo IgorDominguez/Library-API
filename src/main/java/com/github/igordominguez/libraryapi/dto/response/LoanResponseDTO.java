@@ -10,5 +10,6 @@ public record LoanResponseDTO(
         BookResponseDTO book,
         ReaderResponseDTO reader,
         LocalDateTime loanDateTime,
+        LocalDateTime returnBookDateTime,
         LoanStatus loanStatus
 ) {}

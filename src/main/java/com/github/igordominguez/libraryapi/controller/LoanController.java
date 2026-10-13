@@ -5,14 +5,16 @@ import com.github.igordominguez.libraryapi.dto.request.LoanRequestDTO;
 import com.github.igordominguez.libraryapi.dto.response.BookResponseDTO;
 import com.github.igordominguez.libraryapi.dto.response.LoanResponseDTO;
 import com.github.igordominguez.libraryapi.service.LoanService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//@RestController
-//@RequestMapping("/loan")
+@RestController
+@RequestMapping("/loan")
+@Tag(name = "Loan")
 public class LoanController {
 
     private final LoanService loanService;
@@ -31,13 +33,11 @@ public class LoanController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Void> getLoanById(Long loanId) {
-
-        loanService.returnBook(loanId);
+    public ResponseEntity<LoanResponseDTO> getLoanById(Long loanId) {
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .build();
+                .body(loanService.findLoanById(loanId));
     }
 
     @GetMapping("/all")
@@ -48,7 +48,7 @@ public class LoanController {
                 .body(loanService.getAllLoans());
     }
 
-    @GetMapping("/{readerId}")
+    @GetMapping("/all/reader/{readerId}")
     public ResponseEntity<List<LoanResponseDTO>> getLoansOfReaderById(Long readerId) {
 
         return ResponseEntity

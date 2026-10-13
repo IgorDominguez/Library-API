@@ -58,15 +58,15 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
-//    @ExceptionHandler(LoanNotFound.class)
-//    public ResponseEntity<ErrorResponseDTO> handleAuthorNotFound(LoanNotFound ex) {
-//
-//        ErrorResponseDTO errorResponse = new ErrorResponseDTO(
-//                LocalDateTime.now(),
-//                HttpStatus.NOT_FOUND,
-//                ex.getMessage()
-//        );
-//
-//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-//    }
+    @ExceptionHandler(LoanNotFound.class)
+    public ResponseEntity<ErrorResponseDTO> handleAuthorNotFound(LoanNotFound ex) {
+
+        ErrorResponseDTO errorResponse = new ErrorResponseDTO(
+                LocalDateTime.now(),
+                HttpStatus.NOT_FOUND,
+                ex.getMessage()
+        );
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
 }

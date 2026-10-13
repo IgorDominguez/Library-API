@@ -77,6 +77,15 @@ public class LoanService {
                 .orElseThrow(() -> new LoanNotFound(loanId));
 
         loanModel.setLoanStatus(LoanStatus.AVAILABLE);
+        loanModel.setReturnDateTime(LocalDateTime.now());
+
+        BookModel bookModel = bookRepository.findById(loanModel.getBook_id().getId())
+                .orElseThrow(() -> new BookNotFoundException(loanModel.getBook_id().getId()));
+
+        bookModel.setAvailable(true);
+
+        loanRepository.save(loanModel);
+        bookRepository.save(bookModel);
     }
 
     public List<LoanResponseDTO> getLoansOfReaderById(Long readerId) {
@@ -87,6 +96,14 @@ public class LoanService {
         return loanRepository.findLoansOfReaderById(readerId).stream()
                 .map(l -> toLoanResponseDTO(l))
                 .toList();
+    }
+
+    public LoanResponseDTO findLoanById(Long loanId) {
+
+        LoanModel loanModel = loanRepository.findById(loanId)
+                .orElseThrow(() -> new LoanNotFound(loanId));
+
+        return toLoanResponseDTO(loanModel);
     }
 
     private LoanResponseDTO toLoanResponseDTO(LoanModel loanModel) {
@@ -109,6 +126,7 @@ public class LoanService {
                         loanModel.getReader_id().getEmail()
                 ),
                 loanModel.getLoanDateTime(),
+                loanModel.getReturnDateTime(),
                 loanModel.getLoanStatus()
         );
     }
