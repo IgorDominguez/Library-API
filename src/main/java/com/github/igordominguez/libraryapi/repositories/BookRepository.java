@@ -12,4 +12,7 @@ public interface BookRepository extends JpaRepository<BookModel, Long> {
 
     @Query(value = "SELECT * FROM book WHERE available = true", nativeQuery = true)
     List<BookModel> findBooksAvailable();
+
+    @Query(value = "SELECT * FROM book WHERE title = :title", nativeQuery = true)
+    List<BookModel> findBooksByTitle(String title);
 }

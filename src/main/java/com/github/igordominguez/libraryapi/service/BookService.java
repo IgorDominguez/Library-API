@@ -88,6 +88,13 @@ public class BookService {
         bookRepository.delete(bookModel);
     }
 
+    public List<BookResponseDTO> findBookByTitle(String title) {
+
+        return bookRepository.findBooksByTitle(title).stream()
+                .map(b -> toBookResponseDTO(b))
+                .toList();
+    }
+
     private BookResponseDTO toBookResponseDTO(BookModel bookModel) {
 
         return new BookResponseDTO(

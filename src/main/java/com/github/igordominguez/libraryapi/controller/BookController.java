@@ -73,4 +73,12 @@ public class BookController {
                 .status(HttpStatus.OK)
                 .build();
     }
+
+    @GetMapping("/title/{title}")
+    public ResponseEntity<List<BookResponseDTO>> findBooksByTitle(String title) {
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(bookService.findBookByTitle(title));
+    }
 }
